@@ -1,0 +1,18 @@
+.certificate {
+    padding: 50px 20px;
+    background-color: rgb(50,50,50);
+    color: white;
+
+    .cerbox {
+        border-radius: 20px;
+        border: 1px solid gray;
+    }
+
+    .outlinecer {
+        background-color: gray;
+        width: 150px;
+        height: 200px;
+        margin: auto;
+        justify-content: center;
+    }
+}
