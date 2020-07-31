@@ -1,11 +1,11 @@
 const router = require('express').Router();
 let Admin = require('../models/admin.model');
-let User = require('../models/user.model');
 
 router.route('/').get((req, res) => {
-	Admin.find()
-	.then(admin => res.json(admin))
-	.catch(err => res.status(400).json('Error: ' + err));
+	'it is working'
+	// Admin.find()
+	// .then(admin => res.json(admin))
+	// .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add/:status').post((req, res) => {
