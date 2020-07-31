@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Admin = require('../models/admin.model');
 
 router.route('/').get((req, res) => {
-	res.send('it is working')
+	res.jsone('it is working')
 	// Admin.find()
 	// .then(admin => res.json(admin))
 	// .catch(err => res.status(400).json('Error: ' + err));
