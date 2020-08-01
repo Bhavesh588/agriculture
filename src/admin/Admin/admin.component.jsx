@@ -278,6 +278,11 @@ class Admin extends Component {
                             t_filename: [],
                             t_title: [],
                             t_job: []
+                        },
+                        home: {
+                            h_logo: '',
+                            h_title: '',
+                            h_moto: ''
                         }
                     }
                     console.log(data)

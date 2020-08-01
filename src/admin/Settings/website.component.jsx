@@ -14,6 +14,7 @@ class Website extends Component {
             checked2: false,
             admindata: [],
             i: -1,
+            filehome: '',
             filepro: '',
             fileser: '',
             fileab: '',
@@ -22,8 +23,14 @@ class Website extends Component {
             titletext: '',
             destext: '',
             list: [],
+            home: [],
             product: [],
             services: [],
+            certificate: [],
+            team: [],
+            h_logo: [],
+            h_title: [],
+            h_moto: [],
             p_filename: [],
             p_title: [],
             p_des: [],
@@ -31,11 +38,9 @@ class Website extends Component {
             s_des: [],
             a_filename: '',
             a_des: '',
-            certificate: [],
             t_filename: [],
             t_title: [],
-            t_job: [],
-            team: []
+            t_job: []
         };
 
         this.handleChange2 = this.handleChange2.bind(this);
@@ -43,6 +48,7 @@ class Website extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onDecline = this.onDecline.bind(this);
+        this.onEditHome = this.onEditHome.bind(this);
         this.onEditProduct = this.onEditProduct.bind(this);
         this.onEditService = this.onEditService.bind(this);
         this.onEditAboutus = this.onEditAboutus.bind(this);
@@ -68,6 +74,9 @@ class Website extends Component {
                     t_filename: res.data[0].team.t_filename,
                     t_title: res.data[0].team.t_title,
                     t_job: res.data[0].team.t_job,
+                    h_logo: res.data[0].home.h_logo,
+                    h_title: res.data[0].home.h_title,
+                    h_moto: res.data[0].home.h_moto,
                     product: res.data[0].product,
                     services: res.data[0].services,
                     aboutus: res.data[0].aboutus,
@@ -103,36 +112,63 @@ class Website extends Component {
         let index = e.target.id
         if(e.target.name === 'fileab') {
             index = index.replace('#', '')
-            this.setState({fileab: e.target.value.replace("C:\\fakepath\\", '')})
+            if(e.target.value === "") {
+                this.setState({fileab: this.state.fileab})
+            } else {
+                this.setState({fileab: e.target.value.replace("C:\\fakepath\\", '')})
+            }
+        } else if(e.target.name === 'filehome') {
+            if((typeof e.target.value) === "undefined" || e.target.value === "") {
+                this.setState({filehome: this.state.filehome})
+            } else {
+                this.setState({filehome: e.target.value.replace("C:\\fakepath\\", '')})
+            }
         } else if(e.target.name === 'filepro') {
             if(index === '') {
                 this.setState({filepro: e.target.value.replace("C:\\fakepath\\", '')})
             } else {
-                this.state.p_filename.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
-                this.setState({p_filename: this.state.p_filename})
+                if((typeof e.target.value) === "undefined" || e.target.value === "") {
+                    this.setState({filepro: this.state.filepro})
+                } else {
+                    this.state.p_filename.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
+                    this.setState({p_filename: this.state.p_filename})
+                    console.log(this.state.p_filename)
+                }
             }
         } else if(e.target.name === 'fileser') {
             if(index === '') {
                 this.setState({fileser: e.target.value.replace("C:\\fakepath\\", '')})
             } else {
-                this.state.s_filename.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
-                this.setState({s_filename: this.state.s_filename})
+                if(e.target.value === "") {
+                    this.setState({fileser: this.state.fileser})
+                } else {
+                    this.state.s_filename.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
+                    this.setState({s_filename: this.state.s_filename})
+                }
             }
         } else if(e.target.name === 'filecer') {
             index = index.replace('##', '')
             if(index === '') {
                 this.setState({filecer: e.target.value.replace("C:\\fakepath\\", '')})
             } else {
-                this.state.certificate.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
-                this.setState({certificate: this.state.certificate})
+                if(e.target.value === "") {
+                    this.setState({filecer: this.state.certificate[index]})
+                } else {
+                    this.state.certificate.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
+                    this.setState({certificate: this.state.certificate})
+                }
             }
         } else if(e.target.name === 'fileteam') {
             index = index.replace('###', '')
             if(index === '') {
                 this.setState({fileteam: e.target.value.replace("C:\\fakepath\\", '')})
             } else {
-                this.state.t_filename.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
-                this.setState({t_filename: this.state.t_filename})
+                if(e.target.value === "") {
+                    this.setState({fileteam: this.state.t_filename[index]})
+                } else {
+                    this.state.t_filename.splice(index, 1, e.target.value.replace("C:\\fakepath\\", ''))
+                    this.setState({t_filename: this.state.t_filename})
+                }
             }
         }
         else {
@@ -203,6 +239,32 @@ class Website extends Component {
     Images of all the backgraound and logos (home, Product(), Service(), About us(), Certificate(), Team())
     Preview
     Publish*/
+
+    onEditHome() {
+        let filestr = this.state.h_logo
+        let titlestr = this.state.h_title
+        let desstr = this.state.h_moto
+        if(this.state.filehome !== '') {
+            filestr = this.state.filehome
+        }
+        if(this.state.titletext !== '') {
+            titlestr = this.state.titletext
+        }
+        if(this.state.destext !== '') {
+            desstr = this.state.destext
+        }
+
+        let data = {
+            home: {
+                h_logo: filestr,
+                h_title: titlestr,
+                h_moto: desstr
+            }
+        }
+        let status = 'Home'
+        axios.post('http://localhost:5000/admin/update/' + this.state.admindata._id + '/' + status, data)
+        .then(res => console.log(res.data))
+    }
 
     onEditProduct(e) {
         let index = Number(e.target.name)
@@ -590,6 +652,36 @@ class Website extends Component {
                 </div>
 
                 <h3 className="text-left m-3">Content Edit</h3>
+                {/*Home*/}
+                <div className="mx-3 text-left">
+                    <h4>Home</h4>
+                    <div className="imgabout m-auto">
+                        {
+                            this.state.filehome === ''
+                            ? this.state.h_logo.length === 0
+                                ? <img src={require('../../Images/Service.png')} className="imgab" alt="About us"/>
+                                : <img src={require('../../Images/'+this.state.h_logo)} className="imgab" alt="About us"/>
+                            : <img src={require('../../Images/'+this.state.filehome)} className="imgab" alt="About us"/>
+                        }
+                    </div>
+                    <form className="formbox">
+                        <ul className="navbar-nav">
+                            <li className="nav-item py-3">
+                                <input type="file" name="filehome" onChange={this.onChange} />
+                            </li>
+                            <li className="nav-item py-2">
+                                <input type="text" name="titletext" placeholder="Add Title" onChange={this.onChange} defaultValue={this.state.h_title} />
+                            </li>
+                            <li className="nav-item py-2">
+                                <textarea className="span6 w-100" rows="3" name="destext" placeholder="Type Moto Here" onChange={this.onChange} defaultValue={this.state.h_moto}></textarea>
+                            </li>
+                            <li className="nav-item text-right">
+                                <button className="btn btn-danger" name="about" onClick={this.onEditHome}>Save</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+
                 {/*Product*/}
                 <div className="mx-3 text-left">
                     <h4>Product</h4>
@@ -618,7 +710,7 @@ class Website extends Component {
                                                         <input type="text" name="titletext" placeholder="Add Title" onChange={this.onChange} defaultValue={this.state.p_title[i]} />
                                                     </li>
                                                     <li className="nav-item py-2">
-                                                        <textarea className="span6 w-100" rows="3" name="destext" placeholder="Add your Product discription here" onChange={this.onChange} defaultValue={this.state.p_des[i]}></textarea>
+                                                        <textarea className="span6 w-100" rows="6" name="destext" placeholder="Add your Product discription here" onChange={this.onChange} defaultValue={this.state.p_des[i]}></textarea>
                                                     </li>
                                                     <li className="nav-item text-right">
                                                         <button className="btn btn-danger mx-3" name={i} onClick={this.onEditProduct}>Save</button>
@@ -653,7 +745,7 @@ class Website extends Component {
                                         <input type="text" name="titletext" placeholder="Add Title" onChange={this.onChange} required />
                                     </li>
                                     <li className="nav-item py-2">
-                                        <textarea className="span6 w-100" rows="3" name="destext" placeholder="Add your Product discription here" onChange={this.onChange} required></textarea>
+                                        <textarea className="span6 w-100" rows="6" name="destext" placeholder="Add your Product discription here" onChange={this.onChange} required></textarea>
                                     </li>
                                     <li className="nav-item text-right">
                                         <button className="btn btn-danger mx-3">Save</button>
@@ -689,7 +781,7 @@ class Website extends Component {
                                                         <input type="file" name="fileser" id={i} onChange={this.onChange} />
                                                     </li>
                                                     <li className="nav-item py-2">
-                                                        <textarea className="span6 w-100" rows="3" name="destext" placeholder="Add your Product discription here" onChange={this.onChange} defaultValue={this.state.s_des[i]}></textarea>
+                                                        <textarea className="span6 w-100" rows="6" name="destext" placeholder="Add your Product discription here" onChange={this.onChange} defaultValue={this.state.s_des[i]}></textarea>
                                                     </li>
                                                     <li className="nav-item text-right">
                                                         <button className="btn btn-danger mx-3" name={i} onClick={this.onEditService}>Save</button>
@@ -735,15 +827,15 @@ class Website extends Component {
                 {/*About us*/}
                 <div className="mx-3 text-left">
                     <h4>About Us</h4>
-                    <div className="imgproduct m-auto">
+                    <div className="imgabout m-auto">
                         {
                             this.state.fileab === ''
                             ? (typeof this.state.a_filename) !== 'undefined'
                                 ? this.state.a_filename !== ''
-                                    ? <img src={require('../../Images/'+this.state.a_filename)} alt="About us"/>
-                                    : <img src={require('../../Images/Service.png')} alt="About us"/>
-                                : <img src={require('../../Images/Service.png')} alt="About us"/>
-                            : <img src={require('../../Images/'+this.state.fileab)} alt="About us"/>
+                                    ? <img src={require('../../Images/'+this.state.a_filename)} className="imgab" alt="About us"/>
+                                    : <img src={require('../../Images/Service.png')} className="imgab" alt="About us"/>
+                                : <img src={require('../../Images/Service.png')} className="imgab" alt="About us"/>
+                            : <img src={require('../../Images/'+this.state.fileab)} className="imgab" alt="About us"/>
                         }
                     </div>
                     <form className="formbox">
@@ -752,15 +844,15 @@ class Website extends Component {
                                 <input type="file" name="fileab" onChange={this.onChange} />
                             </li>
                             <li className="nav-item py-2">
-                                <textarea className="span6 w-100" rows="3" name="destext" placeholder="About us Content" onChange={this.onChange} defaultValue={this.state.a_des}></textarea>
+                                <textarea className="span6 w-100" rows="10" name="destext" placeholder="About us Content" onChange={this.onChange} defaultValue={this.state.a_des}></textarea>
                             </li>
                             <li className="nav-item text-right">
-                                <button className="btn btn-danger mx-3" name="about" onClick={this.onEditAboutus}>Save</button>
+                                <button className="btn btn-danger" name="about" onClick={this.onEditAboutus}>Save</button>
                             </li>
                         </ul>
                     </form>
                 </div>
-
+                
                 {/*Certificate*/}
                 <div className="m-3 text-left">
                     <h4>Certificate</h4>
@@ -777,8 +869,8 @@ class Website extends Component {
                                             <button className="btn border-danger text-danger" name="certificate" id={i} onClick={this.onDecline}>Decline</button>
                                         </div>
                                         <div className="collapse navbar-collapse" id={c_idname[i]}>
-                                            <div className="imgproduct m-auto">
-                                                <img src={require('../../Images/'+this.state.certificate[i])} alt="Product"/>
+                                            <div className="imgcer m-auto">
+                                                <img src={require('../../Images/'+this.state.certificate[i])} className="img" alt="Product"/>
                                             </div>
                                             <form className="formbox">
                                                 <ul className="navbar-nav">
@@ -802,11 +894,11 @@ class Website extends Component {
                             <button className="btn btn-danger" type="button" data-toggle="collapse" data-target="#ceradd"><span>Add Service</span></button>
                         </div>
                         <div className="collapse navbar-collapse" id="ceradd">
-                            <div className="imgproduct m-auto">
+                            <div className="imgcer m-auto">
                                 {
                                     this.state.filecer=== ''
-                                    ? <img src={require('../../Images/Service.png')} alt="Product"/>
-                                    : <img src={require('../../Images/'+this.state.filecer)} alt="Product"/>
+                                    ? <img src={require('../../Images/Service.png')} className="img" alt="Product"/>
+                                    : <img src={require('../../Images/'+this.state.filecer)} className="img" alt="Product"/>
                                 }
                             </div>
                             <form className="formbox" name="certificate" onSubmit={this.onSave}>

@@ -44,6 +44,11 @@ const adminSchema = new Schema({
 		name: {type: String, required: true}
 	}],
 	admindark: {type:Boolean, required: true},
+	home: {
+		h_logo: {type:String},
+		h_title: {type:String},
+		h_moto: {type:String}
+	},
 	product: {
 		p_filename: [{type:String}],
 		p_title: [{type:String}],

@@ -1,12 +1,11 @@
 const router = require('express').Router();
 let Admin = require('../models/admin.model');
 
-// router.route('/').get((req, res) => {
-// 	res.json('it is working')
-// 	// Admin.find()
-// 	// .then(admin => res.json(admin))
-// 	// .catch(err => res.status(400).json('Error: ' + err));
-// });
+router.route('/').get((req, res) => {
+	Admin.find()
+	.then(admin => res.json(admin))
+	.catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.route('/add/:status').post((req, res) => {
 	if(req.params.status === 'accept') {
@@ -42,7 +41,8 @@ router.route('/add/:status').post((req, res) => {
 		const aboutus = req.body.aboutus
 		const certificate = req.body.certificate
 		const team = req.body.team
-		const admin = new Admin({Dates, accepted, cancelled, doned, users, arrange, admindark, aboutus, certificate, team});
+		const home = req.body.home
+		const admin = new Admin({Dates, accepted, cancelled, doned, users, arrange, admindark, aboutus, certificate, team, home});
 		admin.save()
 		.then(() => res.json('Admin added!!!'))
 		.catch(err => res.status(400).json('Error: ' + err));
@@ -207,6 +207,16 @@ router.route('/update/:id/:status').post((req,res) => {
 		Admin.findById(req.params.id)
 		.then(admin => { 
 			admin.team = req.body.team
+			
+			admin.save()
+			.then(() => res.json('Admin Updated'))
+			.catch(err => res.status(400).json('Error: ' + err));
+		})
+		.catch(err => res.status(400).json('Error: ' + err));
+	} else if(req.params.status === 'Home') {
+		Admin.findById(req.params.id)
+		.then(admin => { 
+			admin.home = req.body.home
 			
 			admin.save()
 			.then(() => res.json('Admin Updated'))

@@ -10,7 +10,12 @@ const Aboutus = ({ about }) => {
                     <div className="row">
                         <div className="col-md">
                             <div className="aboutimage">
-                                <img src={require('../../Images/'+about.a_filename)} alt="Product"/>
+                                {
+                                    about.a_filename === ""
+                                    ? null
+                                    :   <img src={require('../../Images/'+about.a_filename)} className="imgabout" alt="Product"/>
+                                }
+                                
                             </div>
                         </div>
                         <div className="col-md det">

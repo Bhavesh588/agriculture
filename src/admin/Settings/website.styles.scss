@@ -60,6 +60,28 @@
     overflow: hidden;
 }
 
+.imgcer {
+    // background-color: #999;
+    text-align: center;
+    width: 200px;
+    height: auto;
+    .img {
+        width: auto;
+        height: 200px;
+    }
+}
+
+.imgabout {
+    // background-color: #aaa;
+    text-align: center;
+    width: auto;
+    height: auto;
+    .imgab {
+        width: auto;
+        height: 200px;
+    }
+}
+
 .toppart {
     display: flex;
     justify-content: space-between;

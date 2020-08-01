@@ -2,42 +2,21 @@ import React from 'react';
 
 import './certificate.styles.scss';
 
-const Certificate = () => {
+const Certificate = ({ cert }) => {
     return (
         <div className="certificate">
             <div className="cerbox" data-aos="fade-up">
                 <div className="title">Certificates</div>
                 <div className="row">
-                    <div className="col-md ">
-                        <div className='outlinecer my-3'>
-                            Certificate Image
-                        </div>
-                        <div className="py-3">[Certificate Name]</div>
-                    </div>
-                    <div className="col-md ">
-                        <div className='outlinecer my-3'>
-                            Certificate Image
-                        </div>
-                        <div className="py-3">[Certificate Name]</div>
-                    </div>
-                    <div className="col-md ">
-                        <div className='outlinecer my-3'>
-                            Certificate Image
-                        </div>
-                        <div className="py-3">[Certificate Name]</div>
-                    </div>
-                    <div className="col-md ">
-                        <div className='outlinecer my-3'>
-                            Certificate Image
-                        </div>
-                        <div className="py-3">[Certificate Name]</div>
-                    </div>
-                    <div className="col-md ">
-                        <div className='outlinecer my-3'>
-                            Certificate Image
-                        </div>
-                        <div className="py-3">[Certificate Name]</div>
-                    </div>
+                    {
+                        cert.map((cer, i) => 
+                            <div className="col-xl" key={i}>
+                                <div className='outlinecer my-3'>
+                                    <img src={require('../../Images/'+cer)} className="imgser" alt="Service"/>
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </div>

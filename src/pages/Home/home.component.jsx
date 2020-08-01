@@ -57,16 +57,22 @@ function Home() {
     const Contactus1 = () => scrollToRef(contactus)
     const Team1 = () => scrollToRef(team)
 
+    let hom = []
     let pro = []
     let about = []
     let service = []
+    let cert = []
+    let tea = []
     let arrange = []
     let navar = []
     let contentar = []
     if((typeof data.length) !== 'undefined') {
+        hom = data[0].home
         pro = data[0].product
         about = data[0].aboutus
         service = data[0].services
+        cert = data[0].certificate
+        tea = data[0].team
         data[0].arrange.map(ar => arrange.push(ar.name))
     }
 
@@ -86,11 +92,11 @@ function Home() {
                 break
             case 'Certificate':
                 navar.push(<li className="nav-item" key={i}><button className="nav-link btn" onClick={Certificate1}>Certificate</button></li>)
-                contentar.push(<div ref={certificate} key={i}><Certificate /></div>)
+                contentar.push(<div ref={certificate} key={i}><Certificate cert={cert} /></div>)
                 break
             case 'Team':
                 navar.push(<li className="nav-item" key={i}><button className="nav-link btn" onClick={Team1}>Team</button></li>)
-                contentar.push(<div ref={team} key={i}><Team /></div>)
+                contentar.push(<div ref={team} key={i}><Team team={tea} /></div>)
                 break
             case 'Contactus':
                 navar.push(<li className="nav-item" key={i}><button className="nav-link btn" onClick={Contactus1}>Contact Us</button></li>)
@@ -111,7 +117,13 @@ function Home() {
         <div>
             <div className="Home" ref={home}>
                 <div className='navbar navbar-dark fixed-top navbar-expand-md'>
-                    <a href="true" className='navbar-brand'>Logo</a>
+                    <a href="true" className='navbar-brand siz'>
+                        {
+                            (typeof hom.h_logo) === "undefined"
+                            ?   <b>[Logo]</b>
+                            :   <img src={require('../../Images/'+hom.h_logo)} className="imghome" alt="Product"/>
+                        }
+                    </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsible">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -125,9 +137,15 @@ function Home() {
                     </div>
                 </div>
                 <div data-aos="fade-up">
-                    <div className="logo">[Logo]</div><br/>
-                    <div className="compname">[Company Name]</div>
-                    <div className="moto">[Moto]</div>
+                    <div className="logo">
+                        {
+                            (typeof hom.h_logo) === "undefined"
+                            ?   <b>[Logo]</b>
+                            :   <img src={require('../../Images/'+hom.h_logo)} className="imgho" alt="Product"/>
+                        }
+                    </div><br/>
+                    <div className="compname">{hom.h_title}</div>
+                    <div className="moto">{hom.h_moto}</div>
                     <button className="btn btn-danger button" onClick={Contactus1}>Contact Us</button>
                 </div>
             </div>
