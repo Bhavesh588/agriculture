@@ -29,7 +29,7 @@
     "sass-loader": "^9.0.2"
   },
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"npm run server\"",
+    "start": "concurrently \"npm run server\" \"npm run dev\"",
     "dev": "react-scripts start",
     "server": "nodemon server.js",
     "build": "react-scripts build",
