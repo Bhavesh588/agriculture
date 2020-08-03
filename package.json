@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.3",
+    "concurrently": "^5.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -28,7 +29,9 @@
     "sass-loader": "^9.0.2"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "concurrently \"npm run dev\" \"npm run server\"",
+    "dev": "react-scripts start",
+    "server": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
